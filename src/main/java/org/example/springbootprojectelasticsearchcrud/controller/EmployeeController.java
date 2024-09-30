@@ -19,33 +19,33 @@ public class EmployeeController {
         return employeeService.getEmployeeById(id);
     }
 
-//    @GetMapping
-//    public Iterable<Employee> getAllEmployees() {
-//        return employeeService.getAllEmployees();
-//    }
-//
-//    @DeleteMapping("/delete/{id}")
-//    public String deleteEmployee(@PathVariable int id) {
-//       return employeeService.deleteEmployeeById(id);
-//    }
-//    @DeleteMapping
-//    public String deleteAllEmployee() {
-//        return employeeService.deleteAllEmployees();
-//    }
-//
-//    @PutMapping("/update/{id}")
-//    public String updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
-//        return employeeService.updateEmployee(id, employee);
-//    }
-//    @GetMapping("/search")
-//    public Iterable<Employee> searchEmployee(@RequestParam String name) {
-//      return  employeeService.searchByName(name);
-//    }
-//    @GetMapping("/range")
-//    public Iterable<Employee> findBySalaryBetween(@RequestParam double min,@RequestParam double max){
-//        return employeeService.findBySalaryBetween(min,max);
-//    }
-//
+    @GetMapping
+    public Iterable<Employee> getAllEmployees() {
+        return employeeService.getAllEmployees();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteEmployee(@PathVariable int id) {
+       return employeeService.deleteEmployeeById(id);
+    }
+    @DeleteMapping
+    public String deleteAllEmployee() {
+        return employeeService.deleteAllEmployees();
+    }
+
+    @PutMapping("/update/{id}")
+    public String updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
+        return employeeService.updateEmployee(id, employee);
+    }
+    @GetMapping("/search")
+    public Iterable<Employee> searchEmployee(@RequestParam String name) {
+      return  employeeService.searchByName(name);
+    }
+    @GetMapping("/range")
+    public Iterable<Employee> findBySalaryBetween(@RequestParam double min,@RequestParam double max){
+        return employeeService.findBySalaryBetween(min,max);
+    }
+
 
 
 }
