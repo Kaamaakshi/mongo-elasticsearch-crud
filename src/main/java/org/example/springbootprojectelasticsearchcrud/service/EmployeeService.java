@@ -1,25 +1,43 @@
 package org.example.springbootprojectelasticsearchcrud.service;
 
 import org.example.springbootprojectelasticsearchcrud.model.Employee;
-import org.example.springbootprojectelasticsearchcrud.repository.EmployeeRepository;
+import org.example.springbootprojectelasticsearchcrud.repository.elastic.EmployeeElasticRepo;
+import org.example.springbootprojectelasticsearchcrud.repository.mongodb.EmployeeMongoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class EmployeeService {
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeElasticRepo employeeRepository;
+    @Autowired
+    private EmployeeMongoRepo employeeMongoRepo;
 
-    public String saveEmployee(Employee employee) {
+    public String saveEmployee(Employee employee)
+    {
         employeeRepository.save(employee);
-        return "employeedata saved successfully";
+
+
+        employeeMongoRepo.save(employee);
+        return "employee data saved successfully";
     }
 
-    public Employee getEmployeeById(int id) {
+    public Employee getEmployeeById(Long id) {
         Optional<Employee> employee = employeeRepository.findById(id);
+
+        if (employee.isPresent()) {
+            return employee.get();
+        } else {
+            return null;
+        }
+    }
+
+    public Employee getEmployeeById1(Long id) {
+        Optional<Employee> employee = employeeMongoRepo.findById(id);
 
         if (employee.isPresent()) {
             return employee.get();
@@ -37,22 +55,31 @@ public class EmployeeService {
         }
     }
 
-    public String deleteEmployeeById(int id) {
-        Optional<Employee> employee=employeeRepository.findById(id);
-        if (employee.isPresent()) {
-            employeeRepository.deleteById(id);
-            return "employee data deleted successfully";
+    public Iterable<Employee> getAllEmployees1(){
+        Iterable<Employee> list=employeeMongoRepo.findAll();
+        if(list!=null) {
+            return list;
         }else{
-            return "employee data not found with this id "+ " "+ id;
+            return null;
         }
     }
+
+    public void deleteEmployeeById(Long id) {
+
+            employeeRepository.deleteById(id);
+            employeeMongoRepo.deleteById(id);
+
+    }
+
+
     public String deleteAllEmployees() {
         employeeRepository.deleteAll();
+        employeeMongoRepo.deleteAll();
         return "all data deleted";
     }
 
-    public String updateEmployee(int id,Employee employee) {
-        Optional<Employee> employee1=employeeRepository.findById(id);
+    public String updateEmployeeElastic(Employee employee) {
+        Optional<Employee> employee1=employeeRepository.findById(employee.getId());
         if (employee1.isPresent()) {
              Employee employee2 = employee1.get();
              employee2.setId(employee.getId());
@@ -62,16 +89,23 @@ public class EmployeeService {
              employeeRepository.save(employee2);
              return "employee data updated successfully";
         }else{
-            return "data not found with the id " +" "+id;
+            return "data not found";
         }
-
-    }
-    public List<Employee>  searchByName(String name) {
-        return employeeRepository.findByName(name);
     }
 
-    public List<Employee> findBySalaryBetween(double min, double max) {
-         return employeeRepository.findBySalaryBetween(min, max);
+    public String updateEmployee1(Employee employee) {
+        Optional<Employee> employee1=employeeMongoRepo.findById(employee.getId());
+        if (employee1.isPresent()) {
+            Employee employee2 = employee1.get();
+            employee2.setId(employee.getId());
+            employee2.setName(employee.getName());
+            employee2.setDepartment(employee.getDepartment());
+            employee2.setSalary(employee.getSalary());
+            employeeMongoRepo.save(employee2);
+            return "employee data updated successfully";
+        }else{
+            return "data not found";
+        }
     }
 }
 

@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @EnableElasticsearchRepositories(basePackages = "org.example.springbootprojectelasticsearchcrud.repository.elastic")
-@EnableMongoRepositories(basePackages = "org.example.springbootprojectelasticsearchcrud.repository.Mongo")
+@EnableMongoRepositories(basePackages = "org.example.springbootprojectelasticsearchcrud.repository.mongodb")
 
 public class SpringbootProjectElasticsearchCrudApplication {
 

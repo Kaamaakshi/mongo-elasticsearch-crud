@@ -14,39 +14,44 @@ public class EmployeeController {
     public String saveEmployee(@RequestBody Employee employee) {
        return employeeService.saveEmployee(employee);
     }
-    @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable int id) {
+    @GetMapping("/elastic/{id}")
+    public Employee getEmployeeById(@PathVariable Long id) {
         return employeeService.getEmployeeById(id);
     }
+    @GetMapping("/mongo/{id}")
+    public Employee getEmployeeById1(@PathVariable Long id) {
+        return employeeService.getEmployeeById1(id);
+    }
 
-    @GetMapping
+    @GetMapping("/elastic")
     public Iterable<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
+    @GetMapping("/mongo")
+    public Iterable<Employee> getAllEmployees1() {
+        return employeeService.getAllEmployees1();
+    }
+
 
     @DeleteMapping("/delete/{id}")
-    public String deleteEmployee(@PathVariable int id) {
-       return employeeService.deleteEmployeeById(id);
+    public String deleteEmployee(@PathVariable Long id) {
+        employeeService.deleteEmployeeById(id);
+        return "data deleted with this id  "+id;
     }
+
     @DeleteMapping
     public String deleteAllEmployee() {
         return employeeService.deleteAllEmployees();
     }
 
-    @PutMapping("/update/{id}")
-    public String updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
-        return employeeService.updateEmployee(id, employee);
-    }
-    @GetMapping("/search")
-    public Iterable<Employee> searchEmployee(@RequestParam String name) {
-      return  employeeService.searchByName(name);
-    }
-    @GetMapping("/range")
-    public Iterable<Employee> findBySalaryBetween(@RequestParam double min,@RequestParam double max){
-        return employeeService.findBySalaryBetween(min,max);
+    @PutMapping("/elastic")
+    public String updateEmployee(@RequestBody Employee employee) {
+        return employeeService.updateEmployeeElastic(employee);
     }
 
-
-
+    @PutMapping("/mongo")
+    public String updateEmployee1(@RequestBody Employee employee) {
+        return employeeService.updateEmployee1(employee);
+    }
 }
 
