@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.example</groupId>
-    <artifactId>springboot-project-elasticsearch-crud</artifactId>
+    <artifactId>springboot-project-elasticsearch-mongo-crud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springboot-project-elasticsearch-crud</name>
     <description>springboot-project-elasticsearch-crud</description>
